@@ -1,10 +1,10 @@
-/* GET HOMEPAGE */
-const index = (req, res) => {
+/* GET rooms view */
+const rooms = (req, res) => {
     // For highlighting nav element in header and footer
-    const value = 'home';
+    const value = 'rooms';
     
     res.render(
-        'index', 
+        'rooms', 
         { 
             title: 'Travlr Getaways',
             page: 
@@ -15,5 +15,6 @@ const index = (req, res) => {
     );
 };
 module.exports = {
-    index
+    rooms
 };
+   

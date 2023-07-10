@@ -16,6 +16,16 @@ var hbs = require('hbs');
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'hbs');
 
+// register handlebars helper function for dynamically selecting nav element
+hbs.registerHelper('isSelected', function(value, selectedValue) {
+  return value === selectedValue ? true : false;
+});
+
+// for debugging
+hbs.registerHelper('logger', function(value) {
+  return value;
+})
+
 // register handlebars partials (https://www.npmjs.com/package/hbs)
 hbs.registerPartials(path.join(__dirname, 'app_server', 'views/partials'));
 
