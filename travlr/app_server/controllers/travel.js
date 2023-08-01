@@ -32,7 +32,7 @@ const travelList = (req, res) => {
 /* Internal method to render the travel list */
 const renderTravelList = (req, res, responseBody) => {
     let message = null;
-    let pageTitle = process.env.npm_package_description + ' - Travel';
+    let pageTitle = 'Travlr Getaways - Travel';
     if (!(responseBody instanceof Array)) {
         message = 'API lookup error';
         responseBody = [];
@@ -58,7 +58,66 @@ const renderTravelList = (req, res, responseBody) => {
     );
 }
 
+const travelDetails = (req, res) => {
+    const tripCode = req.params.tripCode;
+    const path = '/api/trips/' + tripCode;
+    const requestOptions = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET',
+        json: {},
+    };
+    // Log API call in console
+    console.info('>> travelController.travelDetails calling ' + requestOptions.url);
+    
+    request(
+        requestOptions,
+        (err, { statusCode }, body) => {
+            if (err) {
+                console.error(err);
+            }
+            renderTravelDetails(req, res, body);
+        }
+    )
+};
+
+/* Internal method to render travel details */
+const renderTravelDetails = (req, res, responseBody) => {
+    let message = null;
+    let pageTitle = 'Travlr Getaways - Travel';
+
+    if (!(responseBody instanceof Array)) {
+        message = 'API lookup error';
+        responseBody = [];
+    } else {
+        if (!responseBody.length) {
+            message = 'That trip does not exist in our database!';
+        }
+    }
+
+    console.info(responseBody);
+
+    // For highlighting nav element in header and footer
+    const value = 'travel';
+
+    const path = '../';
+
+    res.render('travelDetails', 
+        {
+            title: pageTitle,
+            tripDetail: responseBody[0],
+            message,
+            page: 
+            {
+                value: value,
+                path: path
+            },
+            path: path
+        }
+    );
+}
+
 module.exports = {
-    travelList
+    travelList,
+    travelDetails
 };
    
