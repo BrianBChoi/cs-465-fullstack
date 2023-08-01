@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="{{#if path}}{{path}}{{/if}}css/style.css" type="text/css">
+</head>
+<body>
+	<div id="background">
+		<div id="page">
+			{{> header page}}
+			<div id="contents">
+				<div class="box">
+					<div>
+						<div class="body">
+							<h1>{{tripDetail.name}}</h1>
+							<ul id="sites">
+								<li>
+									<a href="/api/trips/{{tripDetail.code}}"><img src="{{#if path}}{{path}}{{/if}}images/{{tripDetail.image}}" alt="Img"></a>
+									<h2><a href="/travel/{{tripDetail.code}}">{{tripDetail.resort}}</a></h2>
+									<p>
+									{{tripDetail.length}}</br>
+									{{tripDetail.perPerson}} per person
+									</p>
+									{{{tripDetail.description}}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{> footer page}}
+	</div>
+</body>
+</html>
