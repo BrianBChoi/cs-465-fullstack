@@ -24,7 +24,7 @@ const tripsList = async (req, res) => {
 
 //POST: /trips
 const tripsAddTrip = async (req, res) => {
-    model
+    Model
     .create({
         code: req.body.code,
         name: req.body.name,
@@ -73,4 +73,4 @@ module.exports = {
     tripsList,
     tripsAddTrip,
     tripsFindByCode
-}
+};
