@@ -22,6 +22,32 @@ const tripsList = async (req, res) => {
         });
 };
 
+//POST: /trips
+const tripsAddTrip = async (req, res) => {
+    model
+    .create({
+        code: req.body.code,
+        name: req.body.name,
+        length: req.body.length,
+        start: req.body.start,
+        resort: req.body.resort,
+        perPerson: req.body.perPerson,
+        image: req.body.image,
+        description: req.body.description
+    },
+    (err, trip) => {
+        if (err) {
+            return res
+                .status(400) // bad request, invalid content
+                .json(err);
+        } else {
+            return res
+                .status(201) // created
+                .json(trip);
+        }
+    });
+}
+
 //GET: /trips/:tripCode - returns a single trip
 const tripsFindByCode = async (req, res) => {
     Model
@@ -45,5 +71,6 @@ const tripsFindByCode = async (req, res) => {
 
 module.exports = {
     tripsList,
+    tripsAddTrip,
     tripsFindByCode
 }
