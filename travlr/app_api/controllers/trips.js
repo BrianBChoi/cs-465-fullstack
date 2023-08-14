@@ -22,7 +22,28 @@ const tripsList = async (req, res) => {
         });
 };
 
-//POST: /trips
+//GET: /trips/:tripCode - returns a single trip
+const tripsFindByCode = async (req, res) => {
+    Model
+        .find({ 'code': req.params.tripCode })
+        .exec((err, trip) => {
+            if (!trip) {
+                return res
+                    .status(404)
+                    .json({ "message": "trip not found" });
+            } else if (err) {
+                return res
+                    .status(404)
+                    .json(err);
+            } else {
+                return res
+                    .status(200)
+                    .json(trip);
+            }
+        });
+};
+
+//POST: /trips - adds a single trip
 const tripsAddTrip = async (req, res) => {
     Model
     .create({
@@ -47,27 +68,6 @@ const tripsAddTrip = async (req, res) => {
         }
     });
 }  
-
-//GET: /trips/:tripCode - returns a single trip
-const tripsFindByCode = async (req, res) => {
-    Model
-        .find({ 'code': req.params.tripCode })
-        .exec((err, trip) => {
-            if (!trip) {
-                return res
-                    .status(404)
-                    .json({ "message": "trip not found" });
-            } else if (err) {
-                return res
-                    .status(404)
-                    .json(err);
-            } else {
-                return res
-                    .status(200)
-                    .json(trip);
-            }
-        });
-};
 
 //PUT: /trips/:tripCode - edits a single trip
 const tripsUpdateTrip = async (req, res) => {
@@ -106,9 +106,36 @@ const tripsUpdateTrip = async (req, res) => {
         });
 }
 
+//DELETE: /trips/:tripCode - deletes a single trip
+const tripsDeleteTrip = async (req, res) => {
+    console.log(req.body);
+    Model
+        .findOneAndDelete({ 'code': req.params.tripCode },
+        (err, deletedTrip) => {
+            if (err) {
+                return res
+                    .status(500)
+                    .json(err);
+            }
+            if (!deletedTrip) {
+                return res
+                    .status(404)
+                    .send({
+                        message: "Trip not found with code " + req.params.tripCode
+                    });
+            }
+            return res
+                .status(200)
+                .send({
+                    message: "Trip deleted successfully!"
+                });
+        })
+}
+
 module.exports = {
     tripsList,
-    tripsAddTrip,
     tripsFindByCode,
-    tripsUpdateTrip
+    tripsAddTrip,
+    tripsUpdateTrip,
+    tripsDeleteTrip
 };
