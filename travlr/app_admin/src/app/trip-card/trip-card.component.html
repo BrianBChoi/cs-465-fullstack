@@ -7,8 +7,13 @@
       <h6 class="card-subtitle mb-2 text-muted">{{ trip.resort }}</h6>
       <p class="card-subtitle mt-3 mb-3 text-muted">{{trip.length}} only {{trip.perPerson | currency:'USD':true}} per person</p>
       <p class="card-text" [innerHTML]="trip.description"></p>
-      <div>
-        <button (click)="editTrip(trip)" class="btn btn-info">Edit</button>
+      <div class="btn-toolbar" role="toolbar" aria-label="Trip card toolbar">
+        <div class="btn-group mr-3" role="group" aria-label="Edit button">
+          <button (click)="editTrip(trip)" class="btn btn-primary">Edit</button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Delete button">
+          <button (click)="deleteTrip(trip)" class="btn btn-secondary">Delete</button>
+        </div>
       </div>
   </div>
 </div>
