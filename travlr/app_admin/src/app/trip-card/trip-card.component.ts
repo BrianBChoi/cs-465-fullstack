@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Trip } from 'models/trip';
 import { TripDataService } from 'services/trip-data.service';
@@ -12,6 +12,7 @@ import { AuthenticationService } from '../authentication.service';
 export class TripCardComponent implements OnInit {
 
   @Input('trip') trip: Trip;
+  @Output() tripDeleted: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private router: Router,
@@ -36,7 +37,7 @@ export class TripCardComponent implements OnInit {
     this.tripService.deleteTrip(trip.code)
       .then(data => {
         console.log(data);
-        this.router.navigate([this.router.url]);
+        this.tripDeleted.emit();
       });
   }
 
